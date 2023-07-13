@@ -112,7 +112,12 @@ void delCitybyPlate(CitiesList* citiesList, int plate)
     CitiesNode *current = findCitybyPlate(citiesList,plate);
 
     /*Deleting first element*/
-    if(current == citiesList->head){
+    if(current == citiesList->head && current == citiesList->tail){
+        citiesList->head = NULL;
+        citiesList->tail = NULL;
+        free(current);
+    }
+    else if(current == citiesList->head){
         citiesList->head = current->next;
         current->next->prev = NULL;
         free(current);
@@ -354,8 +359,11 @@ int findMenubyPlate(char *name, char *region, int plate){
     return pos;
 }
 
-int listMenu(){
+int listMenu(CitiesList *citiesList){
     system("cls");
+    printf("---------------------------------------------\n");
+    printingCities(citiesList);
+    printf("---------------------------------------------\n");
     int pos = 1;
     int keyPressed = 0;
 
@@ -364,6 +372,9 @@ int listMenu(){
 
     while(keyPressed != 13){
         system("cls");
+        printf("---------------------------------------------\n");
+        printingCities(citiesList);
+        printf("---------------------------------------------\n");
         arrowHere(1, pos);  printf(" Sort by Name \n");
         arrowHere(2, pos);  printf(" Sort by Plate \n");
         arrowHere(3, pos);  printf(" Sort by Region \n");
@@ -392,7 +403,7 @@ int main()
     CitiesNode *temp;
     char name[25];
     char region[25];
-    int plate,check;
+    int plate, check, listSelection;
 
     while(TRUE) {
         int selection = mainMenu();
@@ -431,6 +442,10 @@ int main()
                             printf("Press Enter to return main menu.");
                             getch();
                             break;
+                        case 3:
+                            printf("Returning to main menu...");
+                            Sleep(1000);
+                            break;
                     }
                 }else{
                     printf("There isn't any city with this name.\n");
@@ -460,6 +475,10 @@ int main()
                             printf("Press Enter to return main menu.");
                             getch();
                             break;
+                        case 3:
+                            printf("Returning to main menu...");
+                            Sleep(1000);
+                            break;
                     }
                 }else{
                     printf("There isn't any city with this plate.\n");
@@ -468,32 +487,39 @@ int main()
                 }
                 break;
             case 4:
-                /*int listSelection = listMenu();*/
-            case 7:
-                sortbyName(citiesList);
-                printf("Cities sorted by name.\n");
-                printf("Press Enter to return main menu.");
-                getch();
-                break;
-            case 8:
+                check = 1;
+                while (check)
+                {
+                    listSelection = listMenu(citiesList);
+                    switch (listSelection)
+                    {
+                    case 1:
+                        sortbyName(citiesList);
+                        printf("Press Enter to update list.");
+                        getch();
+                        break;
+                    case 2:
+                        sortbyPlate(citiesList);
+                        printf("Press Enter to update list.");
+                        getch();
+                        break;
+                    case 3:
+                        sortbyRegion(citiesList);
+                        printf("Press Enter to update list.");
+                        getch();
+                        break;
+                    case 4:
+                        printf("Returning to main menu...");
+                        Sleep(1000);
+                        check = 0;
+                        break;
+                    }
+                }
                 sortbyPlate(citiesList);
-                printf("Cities sorted by plate.\n");
-                printf("Press Enter to return main menu.");
-                getch();
                 break;
-            case 9:
-                sortbyRegion(citiesList);
-                printf("Cities sorted by region.\n");
-                printf("Press Enter to return main menu.");
-                getch();
-                break;
-            case 10:
-                printingCities(citiesList);
-                printf("Press Enter to return main menu.");
-                getch();
-                break;
-            case 11:
+            case 5:
                 printf("Exiting from program...");
+                Sleep(1000);
                 break;
         }
         if(selection == 5){
