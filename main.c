@@ -143,7 +143,12 @@ void delCitybyName(CitiesList* citiesList, char* cityName)
     CitiesNode *current = findCitybyName(citiesList,cityName);
 
     /*Deleting first element*/
-    if(current == citiesList->head){
+    if(current == citiesList->head && current == citiesList->tail){
+        citiesList->head = NULL;
+        citiesList->tail = NULL;
+        free(current);
+    }
+    else if(current == citiesList->head){
         citiesList->head = current->next;
         current->next->prev = NULL;
         free(current);
