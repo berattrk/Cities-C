@@ -1,0 +1,3 @@
+C:/Users/BeratTürk/Desktop/Cities-C/cmake-build-debug/CMakeFiles/Cities_C.dir
+C:/Users/BeratTürk/Desktop/Cities-C/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/BeratTürk/Desktop/Cities-C/cmake-build-debug/CMakeFiles/rebuild_cache.dir

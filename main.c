@@ -38,6 +38,7 @@ int addCity(CitiesList* citiesList, char* cityName, char* regionName, int plate)
         citiesList->tail = current;
         current->prev = NULL;
         current->next = NULL;
+        return check;
     }
     else{
         current = citiesList->head;
@@ -408,7 +409,27 @@ int main()
     CitiesNode *temp;
     char name[25];
     char region[25];
-    int plate, check, listSelection;
+    char data[255], *token;
+    int plate, check, tempPlate;
+    FILE *fptr;
+    fptr = fopen("cities.txt","a+");
+
+    if(fptr != NULL){
+        while (fgets(data,255,fptr)){
+            token = strtok(data,",");
+            strcpy(name,token);
+
+            token = strtok(NULL,",");
+            strcpy(region,token);
+
+            token = strtok(NULL,",");
+            tempPlate = atoi(token);
+            plate = tempPlate;
+
+
+            addCity(citiesList,name,region,plate);
+        }
+    }
 
     while(TRUE) {
         int selection = mainMenu();
@@ -495,7 +516,7 @@ int main()
                 check = 1;
                 while (check)
                 {
-                    listSelection = listMenu(citiesList);
+                    int listSelection = listMenu(citiesList);
                     switch (listSelection)
                     {
                     case 1:
@@ -523,7 +544,16 @@ int main()
                 sortbyPlate(citiesList);
                 break;
             case 5:
-                printf("Exiting from program...");
+                printf("Exiting from program...\n");
+                printf("Cities are being saved...");
+                fclose(fptr);
+                fptr = fopen("cities.txt","w");
+                temp = citiesList->head;
+                while (temp != NULL)
+                {
+                    fprintf(fptr,"%s,%s,%d\n",temp->name,temp->region,temp->plate);
+                    temp = temp->next;
+                }           
                 Sleep(1000);
                 break;
         }
@@ -531,6 +561,7 @@ int main()
             break;
         }
     }
+    fclose(fptr);
     return 0;
 }
 
