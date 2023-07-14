@@ -1,5 +1,6 @@
 adana,akdeniz,1
 ankara,anadolu,6
 bursa,marmara,16
-istanbul,marmara,34
+mersin,akdeniz,33
 izmir,ege,35
+nigde,anadolu,51

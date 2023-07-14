@@ -4,6 +4,13 @@
 #include <windows.h>
 #include <conio.h>
 
+void clearTerminal(){
+    #ifndef _WIN32
+        system("cls");
+    #else   
+        system("cls");
+    #endif
+}
 
 typedef struct CitiesNode CitiesNode;
 typedef struct CitiesList CitiesList;
@@ -272,14 +279,14 @@ void printingCities(CitiesList* citiesList){
 
 void arrowHere(int realPos, int arrowPos){
     if(realPos == arrowPos){
-        printf(" ----->");
+        printf("\033[0;32m  ----->");
     }else{
-        printf("        ");
+        printf("\033[0;37m         ");
     }
 }
 
 int mainMenu(){
-    system("cls");
+    clearTerminal();
     int pos = 1;
     int keyPressed = 0;
 
@@ -287,7 +294,7 @@ int mainMenu(){
     #define MAINMIN 1
 
     while(keyPressed != 13) {
-        system("cls");
+        clearTerminal();
         arrowHere(1, pos);  printf(" Add City \n");
         arrowHere(2, pos);  printf(" Find City by Name \n");
         arrowHere(3, pos);  printf(" Find City by Plate \n");
@@ -308,7 +315,7 @@ int mainMenu(){
 }
 
 int findMenubyName(char *name, char *region, int plate){
-    system("cls");
+    clearTerminal();
     printf("----------------------\nCity Name: %s\nRegion: %s\nPlate:%d\n----------------------\n",name,region,plate);
     int pos = 1;
     int keyPressed = 0;
@@ -317,7 +324,7 @@ int findMenubyName(char *name, char *region, int plate){
     #define FINDMIN 1
 
     while(keyPressed != 13) {
-        system("cls");
+        clearTerminal();
         printf("----------------------\nCity Name: %s\nRegion: %s\nPlate:%d\n----------------------\n",name,region,plate);
         arrowHere(1, pos);  printf(" Update City \n");
         arrowHere(2, pos);  printf(" Delete City \n");
@@ -337,7 +344,7 @@ int findMenubyName(char *name, char *region, int plate){
 }
 
 int findMenubyPlate(char *name, char *region, int plate){
-    system("cls");
+    clearTerminal();
     printf("----------------------\nCity Name: %s\nRegion: %s\nPlate:%d\n----------------------\n",name,region,plate);
     int pos = 1;
     int keyPressed = 0;
@@ -346,7 +353,7 @@ int findMenubyPlate(char *name, char *region, int plate){
     #define FINDMIN 1
 
     while(keyPressed != 13) {
-        system("cls");
+        clearTerminal();
         printf("----------------------\nCity Name: %s\nRegion: %s\nPlate:%d\n----------------------\n",name,region,plate);
         arrowHere(1, pos);  printf(" Update City \n");
         arrowHere(2, pos);  printf(" Delete City \n");
@@ -366,7 +373,7 @@ int findMenubyPlate(char *name, char *region, int plate){
 }
 
 int listMenu(CitiesList *citiesList){
-    system("cls");
+    clearTerminal();
     printf("---------------------------------------------\n");
     printingCities(citiesList);
     printf("---------------------------------------------\n");
@@ -377,7 +384,7 @@ int listMenu(CitiesList *citiesList){
     #define LISTMIN 1
 
     while(keyPressed != 13){
-        system("cls");
+        clearTerminal();
         printf("---------------------------------------------\n");
         printingCities(citiesList);
         printf("---------------------------------------------\n");
@@ -456,14 +463,14 @@ int main()
                             printf("Region Name: "); scanf("%24s", &region);
                             printf("Plate: ");       scanf("%d", &plate);
                             updateCitybyPlate(citiesList, name, region, plate);
-                            system("cls");
+                            clearTerminal();
                             printf("City was updated.\n");
                             printf("Press Enter to return main menu.");
                             getch();
                             break;
                         case 2:
                             delCitybyName(citiesList, name);
-                            system("cls");
+                            clearTerminal();
                             printf("City was deleted.\n");
                             printf("Press Enter to return main menu.");
                             getch();
@@ -490,7 +497,7 @@ int main()
                             printf("Region Name: "); scanf("%24s", &region);
                             printf("Plate: ");       scanf("%d", &plate);
                             updateCitybyPlate(citiesList, name, region, plate);
-                            system("cls");
+                            clearTerminal();
                             printf("City was updated.\n");
                             printf("Press Enter to return main menu.");
                             getch();
